@@ -6,13 +6,15 @@ typedef struct TOKEN_STRUCT {
   char* literal_value;
   enum {
     TOKEN_ID,
+    TOKEN_INT,
     TOKEN_LPAR,
     TOKEN_RPAR,
     TOKEN_LBR,
     TOKEN_RBR,
     TOKEN_EQ,
     TOKEN_SEMICOLON,
-    TOKEN_COLON
+    TOKEN_COLON,
+    TOKEN_EOF
   } type;
 } token_t;
 
