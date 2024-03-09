@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stddef.h>
-#include "token.h"
+#include "header/token.h"
 
 token_t* init_token(char* value, int type) {
   token_t* token = calloc(1, sizeof(token_t));
