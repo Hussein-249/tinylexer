@@ -19,6 +19,8 @@ lexer_type* init_lexer(char* source);
 
 void lexer_advance(lexer_type* lexer);
 
+char lexer_peek(lexer_type* lexer, int offset_index);
+
 token_t* lexer_advance_with_T(lexer_type* lexer, token_t* token);
 
 token_t* next_token(lexer_type* lexer);

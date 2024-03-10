@@ -1,4 +1,4 @@
-OPT = -Wall
+OPT = -Wall -g
 INCLUDES = -Iheader
 
 c_compiler: main.o token.o lexer.o

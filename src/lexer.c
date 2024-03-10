@@ -25,14 +25,16 @@ void lexer_advance(lexer_type* lexer) {
   }
 }
 
+// Allows lexer to peek along the token by a specified offset
+char lexer_peek(lexer_type* lexer, int offset){
+  return lexer->source[lexer->i+offset];
+}
+
 // Advance the lexer to the next token and categorize it
 token_t* next_token(lexer_type* lexer) {
   while (lexer->c != '\0') {
     if (isalnum(lexer->c)) {
-      // If the character we are analyzing is alpha numeric, then it is a variable?
-      // Pass to a different function to handle this case
-      // Otherwise?
-      continue;
+      lexer_advance_with_T(lexer, parse_id(lexer));
     }
 
     switch (lexer->c) {
@@ -64,14 +66,11 @@ token_t* parse_id(lexer_type* lexer){
 
   char* value = calloc(1, sizeof(char));
   while (isalnum(lexer->c)) {
-
     value = realloc(value, (strlen(value) + 2) * sizeof(char));
 
     strcat(value, (char[]){lexer->c,0});
 
     lexer_advance(lexer);
-
-    return init_token(value);
-
   }
+  return init_token(value, TOKEN_ID);
 }
