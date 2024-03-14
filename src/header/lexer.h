@@ -17,9 +17,11 @@ typedef struct LEXER_STRUCT {
 
 lexer_type* init_lexer(char* source);
 
+char lexer_peek(lexer_type* lexer, int offset_index);
+
 void lexer_advance(lexer_type* lexer);
 
-char lexer_peek(lexer_type* lexer, int offset_index);
+token_t* lexer_advance_cur(lexer_type* lexer, int type);
 
 token_t* lexer_advance_with_T(lexer_type* lexer, token_t* token);
 
@@ -28,5 +30,7 @@ token_t* next_token(lexer_type* lexer);
 void ignore_whitespace(lexer_type* lexer);
 
 token_t* parse_id(lexer_type* lexer);
+
+token_t* parse_nr(lexer_type* lexer);
 
 #endif

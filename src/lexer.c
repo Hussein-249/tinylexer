@@ -1,7 +1,9 @@
-#include "header/lexer.h"
+#include "lexer.h"
+#include "macros.h"
 
 #include <ctype.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
 
@@ -27,7 +29,7 @@ void lexer_advance(lexer_type* lexer) {
 
 // Allows lexer to peek along the token by a specified offset
 char lexer_peek(lexer_type* lexer, int offset){
-  return lexer->source[lexer->i+offset];
+  return lexer->source[MIN(lexer->i+offset, lexer->source_size)];
 }
 
 // Advance the lexer to the next token and categorize it
@@ -37,10 +39,22 @@ token_t* next_token(lexer_type* lexer) {
       lexer_advance_with_T(lexer, parse_id(lexer));
     }
 
+    if (isdigit(lexer->c)) {
+      lexer_advance_with_T(lexer, parse_nr(lexer));
+    }
+
     switch (lexer->c) {
       case '=' : { }
-      case '(' : { }
-      case ')' : { }
+      case '(' : return lexer_advance_cur(lexer, TOKEN_LPAR);
+      case ')' : return lexer_advance_cur(lexer, TOKEN_RPAR);
+      case '{' : { return lexer_advance_cur(lexer, TOKEN_LBR); }
+      case '}' : { return lexer_advance_cur(lexer, TOKEN_RBR); }
+      case ';' : { return lexer_advance_cur(lexer, TOKEN_SEMICOLON); }
+      case '\0' : break;
+      default: {printf("Lexer encountered unexpected character: %c\n", lexer->c );
+                exit(1);
+                break;
+                }
     }
   }
 
@@ -62,7 +76,7 @@ void ignore_whitespace(lexer_type* lexer) {
 }
 
 
-token_t* parse_id(lexer_type* lexer){
+token_t* parse_id(lexer_type* lexer) {
 
   char* value = calloc(1, sizeof(char));
   while (isalnum(lexer->c)) {
@@ -73,4 +87,27 @@ token_t* parse_id(lexer_type* lexer){
     lexer_advance(lexer);
   }
   return init_token(value, TOKEN_ID);
+}
+
+token_t* parse_nr(lexer_type* lexer) {
+  char* value = calloc(1, sizeof(char));
+  while (isdigit(lexer->c)) {
+    value = realloc(value, (strlen(value) + 2) * sizeof(char));
+
+    strcat(value, (char[]){lexer->c,0});
+
+    lexer_advance(lexer);
+  }
+  return init_token(value, TOKEN_INT);
+}
+
+token_t* lexer_advance_with_cur(lexer_type* lexer, int type) {
+  char * value = calloc(2, sizeof(char));
+  value[0] = lexer->c;
+  value[1] = '\0';
+
+  token_t* token = init_token(value, type);
+  lexer_advance(lexer);
+
+  return token;
 }
