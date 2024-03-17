@@ -1,7 +1,3 @@
-/*
-  Defines a token struct to represent characters lexed in the source file.
-*/
-
 #ifndef TOKEN_H
 #define TOKEN_H
 
@@ -16,11 +12,8 @@ typedef struct TOKEN_STRUCT {
     TOKEN_LBR,
     TOKEN_RBR,
     TOKEN_EQ,
-    TOKEN_PLUS,
-    TOKEN_MINUS,
     TOKEN_SEMICOLON,
     TOKEN_COLON,
-    TOKEN_COMMA,
     TOKEN_EOF
   } type;
 } token_t;
