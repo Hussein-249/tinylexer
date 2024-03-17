@@ -1,3 +1,7 @@
+/*
+  Creates and defines token types
+*/
+
 #ifndef TOKEN_H
 #define TOKEN_H
 
@@ -12,6 +16,9 @@ typedef struct TOKEN_STRUCT {
     TOKEN_LBR,
     TOKEN_RBR,
     TOKEN_EQ,
+    TOKEN_PLUS,
+    TOKEN_MINUS,
+    TOKEN_COMMA,
     TOKEN_SEMICOLON,
     TOKEN_COLON,
     TOKEN_EOF
