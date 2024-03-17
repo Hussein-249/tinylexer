@@ -1,3 +1,7 @@
+/*
+  Defines a standalone function to read files character by character.
+*/
+
 #ifndef READ_H
 #define READ_H
 
