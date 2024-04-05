@@ -23,4 +23,7 @@ To run, them, simply pass the desired file as an argument:
 
 # Documentation
 
-To be written once a fully-working model is released.
+Full documentation can be viewed [here.](https://github.com/Hussein-249/tinylexer/wiki)
+
+This section only briefly covers the most critical functions of the lexer.
+
